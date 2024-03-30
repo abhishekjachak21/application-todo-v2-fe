@@ -3,19 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management Tool</title>
-    <link rel="stylesheet" href="1.css">
+    <title>Tasks Management Tool</title>
+    <link rel="stylesheet" href="51.css">
 </head>
+
+
+
 <body>
-    <div id="progress">Progress: <span id="progressValue">0%</span></div>
-    <div class="container">
-     
-        <h1>Enhance Your Productivity</h1>
+    <div class="user-container">
+        <h1>User Profile</h1>
+        <div class="profile-picture-container">
+            <img src="noImg.jpg" alt="profilePicture">
+        </div>
+        <form id="profile-form">
+            <p>
+                <label for="profile-picture">Profile Picture:</label>
+                <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
+            </p>
+            <p>
+                <label for="username">Name:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            </p>
+            <p>
+                <label for="userage">Age:</label>
+                <input type="number" id="userage" name="userage" placeholder="Enter your age" required>
+            </p>
+            <p>
+                <label for="studyingProfession">Studying Profession:</label>
+                <input type="text" id="studyingProfession" name="studyingProfession" placeholder="Enter your profession">
+            </p>
+            <p>
+                <label for="oneBigAchievement">One Past Achievement:</label>
+                <input type="text" id="oneBigAchievement" name="oneBigAchievement" placeholder="Enter your Achievement">
+            </p>
+            <p>
+                <label for="nextGoal">Next GOAL:</label>
+                <input type="text" id="nextGoal" name="nextGoal" placeholder="what is your next GOAL" required>
+            </p>
+            <p>
+                <button id="submitButton" type="submit">Submit</button>
+            </p>
+        </form>
+</div>
+
+    <div id="task-progress-section" class="task-container" style="display: none;" >  
+        <h1>Tasks Progress</h1>
+        <!-- Task progress section -->
+        <!-- style="display: none;" for class task-container -->
+        <label for="taskInput"></label>
         <input type="text" id="taskInput" placeholder="Enter a task...">
         <button id="addTask">Add Task</button>
-        <ul id="taskList"></ul>
+        <ul id="taskList" aria-live="polite"></ul>
     </div>
+
+    <div id="progress-section" class="progress-container">
+        <div class="trophy-picture-container">
+            <img src="trophy.jpg" alt="trophy-id">
+        </div>
+        <div id="progress">
+            <h1>Progress: <span id="progressValue">0%</span></h1>
+        </div>
+    </div>
+
+</body>
+<script>
+    // Get the profile form element
+    const profileForm = document.getElementById('profile-form');
+
+    // Add submit event listener to the profile form
+    profileForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Display the task progress section
+        document.getElementById('task-progress-section').style.display = 'block';
+    });
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="1.js"></script>
+    <script src="11b.js"></script>
+    <script src="19.js"></script>
 </body>
 </html>

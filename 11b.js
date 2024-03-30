@@ -12,53 +12,133 @@ let totalTasks = 0;
 addTaskButton.addEventListener('click', addTask);
 taskList.addEventListener('click', handleTaskActions);
 
+// // Function to add a new task
+// function addTask() {
+    
+//     const taskText = taskInput.value;  // Get the task description from the input field
+    
+//     const taskTime = parseFloat(prompt('Enter target time for this task(in minutes):'));   // Get the target time for the task from the user
+
+//     // Check if the input is valid
+//     if (taskText.trim() !== '' && !isNaN(taskTime) && taskTime > 0) {
+//         // Create a new list item for the task
+//         const taskItem = document.createElement('li');
+        
+//         // Create a checkbox and a label for the task description
+//         const checkbox = document.createElement('input');
+//         checkbox.type = 'checkbox';
+//         const label = document.createElement('label');
+//         label.textContent = taskText;
+
+//         // Add the checkbox and label to the task item
+//         taskItem.appendChild(checkbox);
+//         taskItem.appendChild(label);
+
+//         // Create a section for task details (target time) and a delete button
+//         const taskDetails = document.createElement('div');
+//         taskDetails.classList.add('taskDetails');
+//         // taskDetails.innerHTML = `<span>Target time:</span> ${taskTime} mins`;
+//         taskDetails.innerHTML = `Target Time: ${taskTime} mins`;
+//         const deleteButton = document.createElement('button');
+//         deleteButton.innerText = 'Delete';
+//         deleteButton.classList.add('deleteTask');
+
+//         // Add task details and delete button to the task item
+//         taskItem.appendChild(taskDetails);
+//         taskItem.appendChild(deleteButton);
+
+//         // Add the task item to the task list
+//         taskList.appendChild(taskItem);
+
+//         // Clear the input field and update the total tasks count
+//         taskInput.value = '';
+//         totalTasks++;
+//         updateProgress();
+//     } else {
+//         // Display an alert if the input is invalid
+//         alert('Please enter valid time');
+//     }
+// }
+
 // Function to add a new task
 function addTask() {
-    
-    const taskText = taskInput.value;  // Get the task description from the input field
-    
-    const taskTime = parseFloat(prompt('Enter target time for this task(in minutes):'));   // Get the target time for the task from the user
+    const taskText = taskInput.value;
+    const taskTime = parseFloat(prompt('Enter target time for this task (in minutes):'));
 
-    // Check if the input is valid
+    // Ensure the task description is not empty and target time is a valid number
     if (taskText.trim() !== '' && !isNaN(taskTime) && taskTime > 0) {
-        // Create a new list item for the task
-        const taskItem = document.createElement('li');
+        const taskData = {
+            writeTask: taskText,
+            targetTime: taskTime,
+            completed: false, // Initially set as false
+            actualTime: null // Initially set as null
+        };
+
+        // Send task data to the backend using axios
         
-        // Create a checkbox and a label for the task description
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        const label = document.createElement('label');
-        label.textContent = taskText;
+        axios.post('http://localhost:3002/api/tasks/addTask', taskData)
+            .then(response => {
+                // Handle successful response from the backend
+                console.log('Task added successfully:', response.data);
 
-        // Add the checkbox and label to the task item
-        taskItem.appendChild(checkbox);
-        taskItem.appendChild(label);
+                // Create a new list item for the task
+                const taskItem = createTaskElement(response.data); // Create task item based on backend response
 
-        // Create a section for task details (target time) and a delete button
-        const taskDetails = document.createElement('div');
-        taskDetails.classList.add('taskDetails');
-        // taskDetails.innerHTML = `<span>Target time:</span> ${taskTime} mins`;
-        taskDetails.innerHTML = `Target Time: ${taskTime} mins`;
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Delete';
-        deleteButton.classList.add('deleteTask');
+                // Add the task item to the task list
+                taskList.appendChild(taskItem);
 
-        // Add task details and delete button to the task item
-        taskItem.appendChild(taskDetails);
-        taskItem.appendChild(deleteButton);
-
-        // Add the task item to the task list
-        taskList.appendChild(taskItem);
-
-        // Clear the input field and update the total tasks count
-        taskInput.value = '';
-        totalTasks++;
-        updateProgress();
+                // Clear the input field and update the total tasks count
+                taskInput.value = '';
+                totalTasks++;
+                updateProgress();
+            })
+            .catch(error => {
+                // Handle error response from the backend
+                console.error('Error adding task:', error);
+            });
     } else {
-        // Display an alert if the input is invalid
-        alert('Please enter valid time');
+        alert('Please enter valid task description and target time.');
     }
 }
+
+// Function to create a task item element
+function createTaskElement(taskData) {
+    const { _id, writeTask, targetTime, completed, actualTime } = taskData;
+
+    // Create a new list item for the task
+    const taskItem = document.createElement('li');
+    taskItem.setAttribute('data-task-id', _id); 
+
+    // Create a checkbox and a label for the task description
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = completed; // Set checkbox checked status based on task completion
+    const label = document.createElement('label');
+    label.textContent = writeTask;
+
+    // Add the checkbox and label to the task item
+    taskItem.appendChild(checkbox);
+    taskItem.appendChild(label);
+
+    // Create a section for task details (target time) and a delete button
+    const taskDetails = document.createElement('div');
+    taskDetails.classList.add('taskDetails');
+    taskDetails.innerHTML = `Target Time: ${targetTime} mins`;
+    if (completed && actualTime) {
+        // Display actual time spent if the task is completed
+        taskDetails.innerHTML += `<br>Actual Time: ${actualTime} mins`;
+    }
+    const deleteButton = document.createElement('button');
+    deleteButton.innerText = 'Delete';
+    deleteButton.classList.add('deleteTask');
+
+    // Add task details and delete button to the task item
+    taskItem.appendChild(taskDetails);
+    taskItem.appendChild(deleteButton);
+
+    return taskItem;
+}
+
 
 // taskList(parent)
 // -> taskItem(child of taskList and parent of below 4)
@@ -72,10 +152,25 @@ function handleTaskActions(event) {
     const target = event.target;
 
     if (target.classList.contains('deleteTask')) {
-        // Remove the task if the delete button is clicked
-        target.parentElement.remove();  //target=deletebutton and parentEle is taskItem,so taskItem is removed from taskList
-        totalTasks--;
-        updateProgress();
+        const taskId = target.parentElement.getAttribute('data-task-id');
+
+    // Send a DELETE request to the backend API to delete the task
+    axios.delete(`http://localhost:3002/api/tasks/deleteTask/${taskId}`)
+        .then(response => {
+            // Handle successful response from the backend
+            console.log('Task deleted successfully:', response.data);
+
+            // Remove the task from the frontend UI
+            target.parentElement.remove();
+            totalTasks--;
+            updateProgress();
+        })
+        .catch(error => {
+            // Handle error response from the backend
+            console.error('Error deleting task:', error);
+        });
+
+      
     } else if (target.tagName.toLowerCase() === 'input' && target.type === 'checkbox') { //tagname -> input,div,h1,p etc
     // } else if ( target.type === 'checkbox') { //tagname -> input,div,h1,p etc
     
@@ -101,6 +196,21 @@ function handleTaskActions(event) {
             if (!isNaN(actualTime) && actualTime > 0) {
                 // this will create a section for actual time spent 
                 const timeSpent = document.createElement('div');    //I will work on this...to replace div element
+               
+                const taskId = target.parentElement.getAttribute('data-task-id');
+                const updatedData = { actualTime, completed: true };
+                // Send updated task data to the backend
+                axios.patch(`http://localhost:3002/api/tasks/updateTask/${taskId}`, updatedData)
+                    .then(response => {
+                        // Handle successful response from the backend
+                        console.log('Task updated successfully:', response.data);
+                    })
+                    .catch(error => {
+                        // Handle error response from the backend
+                        console.error('Error updating task:', error);
+                    });
+               
+               
                 timeSpent.innerHTML = `Time Spent: ${actualTime} mins`;
                 target.parentElement.querySelector('.taskDetails').appendChild(timeSpent);
             } 

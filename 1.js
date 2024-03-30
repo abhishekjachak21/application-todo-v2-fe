@@ -27,7 +27,7 @@ function addTask() {
         };
 
         // Send task data to the backend using axios
-        axios.post('https://happystart-api-6.onrender.com/api/tasks/addTask', taskData)
+        axios.post('http://localhost:3002/api/tasks/addTask', taskData)
             .then(response => {
                 // Handle successful response from the backend
                 console.log('Task added successfully:', response.data);
@@ -103,7 +103,7 @@ if (target.classList.contains('deleteTask')) {
     const taskId = target.parentElement.getAttribute('data-task-id');
 
     // Send a DELETE request to the backend API to delete the task
-    axios.delete(`https://happystart-api-6.onrender.com/api/tasks/deleteTask/${taskId}`)
+    axios.delete(`http://localhost:3002/api/tasks/deleteTask/${taskId}`)
         .then(response => {
             // Handle successful response from the backend
             console.log('Task deleted successfully:', response.data);
@@ -145,7 +145,7 @@ if (target.classList.contains('deleteTask')) {
                 const updatedData = { actualTime, completed: true };
 
                 // Send updated task data to the backend
-                axios.patch(`https://happystart-api-6.onrender.com/api/tasks/updateTask/${taskId}`, updatedData)
+                axios.patch(`http://localhost:3002/api/tasks/updateTask/${taskId}`, updatedData)
                     .then(response => {
                         // Handle successful response from the backend
                         console.log('Task updated successfully:', response.data);
