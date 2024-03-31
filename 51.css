@@ -1,29 +1,32 @@
 body{
    background-color: rgb(247, 241, 57);
-   background-image: url('bgimageProductivityApp.jpg');
+   background-image: url('https://img.freepik.com/free-photo/minimalistic-home-desk-design_23-2148991431.jpg?size=626&ext=jpg&ga=GA1.1.1887574231.1711756800&semt=ais');
    background-size: cover;
    background-repeat: no-repeat;
    display: flex;
 }
 
 h1{
-    color: #2337e4;
+    color: #3205fd;
     font-weight: bolder;
     /* background-color: rgba(255, 255, 255, 0.651); */
-    text-shadow: 
-        2px 2px 4px #fefe04; /* Dark red shadow */
+    /* text-shadow:  */
+        /* 2px 2px 4px #fefe04; Dark red shadow */
 }
 
 
 
 p {
-    color: #ff0101; /* Original text color */
+    color: #f37f0c; /* Original text color */
     font-weight: bolder;
     /* background-color: rgba(255, 255, 255, 0.651);s */
-    text-shadow: 
-        2px 2px 4px #fefe04; /* Dark red shadow */
+    /* text-shadow:  */
+        /* 2px 2px 4px #fdb714;    Dark red shadow */
 }
 
+input{
+    background-color: #f1e69c;
+}
 
 .user-container {
     /* background-color: #b0d3ed; */
@@ -33,25 +36,40 @@ p {
     display: flex;
     top: 0;
     left: 0;
-    padding-left: 2%;
+    padding-left: 1%;
     justify-content: center;
     align-items: center;
+
+    h1 {
+        position: absolute; /* Position the h1 absolutely */
+        top: 5%; /* Align to the top of the container */
+        left: 30%; /* Center horizontally */
+        transform: translateX(-50%); /*Center horizontally */
+        margin-top: 0; /* Remove default margin */
+        color: #33f21a;
+        font-weight: bolder;
+    }
+    
 }
 
+
+
+
+
 .profile-picture-container {
-    width: 200px; /* Set width and height for the circular container */
-    height: 150px;
-    border-radius: 30%; /* Make it circular */
+    width: 300px; /* Set width and height for the circular container */
+    height: 300px; /* Equal height and width for a perfect circle */
+    border-radius: 50%; /* Make it circular */
     overflow: hidden; /* Hide overflow content (image corners) */
     margin-bottom: 20px; /* Adjust margin as needed */
+    margin-right: 25px;
 }
 
 .profile-picture-container img {
     width: 100%; /* Make the image fill the circular container */
-    height: auto;
-    border-radius: 50%; /* Maintain circular shape */
+    height: 100%; /* Make the image fill the circular container */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
 }
-
 
 .trophy-picture-container {
     width: 200px;
@@ -213,11 +231,16 @@ li.completed {
 
 
 #submitButton{
-    width: 15%;
-    height: 5%;
+    width: 75px;
+    height: 35px;
     background-color: #81d929;
     border-color: #37a5fa;
     font-weight: bold;
+    font-size: large;
+}
+/* CSS for submitted state */
+.submitted form {
+    display: none;
 }
 
 /* Default styles */

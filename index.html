@@ -12,13 +12,15 @@
 <body>
     <div class="user-container">
         <h1>User Profile</h1>
+
         <div class="profile-picture-container">
-            <img src="noImg.jpg" alt="profilePicture">
+            <img id="profile-picture-img" src="noImg.jpg" alt="profilePicture">
         </div>
+
         <form id="profile-form">
             <p>
                 <label for="profile-picture">Profile Picture:</label>
-                <input type="file" id="profile-picture" name="profilePicture" accept="image/*">
+                <input type="file" id="profile-picture" name="profilePicture" accept="image/*" onchange="previewImage(event)">
             </p>
             <p>
                 <label for="username">Name:</label>
@@ -26,7 +28,7 @@
             </p>
             <p>
                 <label for="userage">Age:</label>
-                <input type="number" id="userage" name="userage" placeholder="Enter your age" required>
+                <input type="text" id="userage" name="userage" placeholder="Enter your age" required>
             </p>
             <p>
                 <label for="studyingProfession">Studying Profession:</label>
@@ -46,7 +48,7 @@
         </form>
 </div>
 
-    <div id="task-progress-section" class="task-container" style="display: none;" >  
+    <div id="task-progress-section" class="task-container"  >  
         <h1>Tasks Progress</h1>
         <!-- Task progress section -->
         <!-- style="display: none;" for class task-container -->
@@ -66,22 +68,10 @@
     </div>
 
 </body>
-<script>
-    // Get the profile form element
-    const profileForm = document.getElementById('profile-form');
 
-    // Add submit event listener to the profile form
-    profileForm.addEventListener('submit', function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-
-        // Display the task progress section
-        document.getElementById('task-progress-section').style.display = 'block';
-    });
-</script>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="11b.js"></script>
-    <script src="19.js"></script>
+    <!-- <script src="11b.js"></script> -->
+    <!-- <script src="19.js"></script> -->
 </body>
 </html>
