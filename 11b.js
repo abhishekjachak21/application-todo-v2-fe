@@ -1,3 +1,5 @@
+const baseURL = 'https://happyb2-api.onrender.com'
+
 // Getting references to HTML elements
 const taskInput = document.getElementById('taskInput');
 const taskList = document.getElementById('taskList');
@@ -12,53 +14,6 @@ let totalTasks = 0;
 addTaskButton.addEventListener('click', addTask);
 taskList.addEventListener('click', handleTaskActions);
 
-// // Function to add a new task
-// function addTask() {
-    
-//     const taskText = taskInput.value;  // Get the task description from the input field
-    
-//     const taskTime = parseFloat(prompt('Enter target time for this task(in minutes):'));   // Get the target time for the task from the user
-
-//     // Check if the input is valid
-//     if (taskText.trim() !== '' && !isNaN(taskTime) && taskTime > 0) {
-//         // Create a new list item for the task
-//         const taskItem = document.createElement('li');
-        
-//         // Create a checkbox and a label for the task description
-//         const checkbox = document.createElement('input');
-//         checkbox.type = 'checkbox';
-//         const label = document.createElement('label');
-//         label.textContent = taskText;
-
-//         // Add the checkbox and label to the task item
-//         taskItem.appendChild(checkbox);
-//         taskItem.appendChild(label);
-
-//         // Create a section for task details (target time) and a delete button
-//         const taskDetails = document.createElement('div');
-//         taskDetails.classList.add('taskDetails');
-//         // taskDetails.innerHTML = `<span>Target time:</span> ${taskTime} mins`;
-//         taskDetails.innerHTML = `Target Time: ${taskTime} mins`;
-//         const deleteButton = document.createElement('button');
-//         deleteButton.innerText = 'Delete';
-//         deleteButton.classList.add('deleteTask');
-
-//         // Add task details and delete button to the task item
-//         taskItem.appendChild(taskDetails);
-//         taskItem.appendChild(deleteButton);
-
-//         // Add the task item to the task list
-//         taskList.appendChild(taskItem);
-
-//         // Clear the input field and update the total tasks count
-//         taskInput.value = '';
-//         totalTasks++;
-//         updateProgress();
-//     } else {
-//         // Display an alert if the input is invalid
-//         alert('Please enter valid time');
-//     }
-// }
 
 // Function to add a new task
 function addTask() {
@@ -76,7 +31,7 @@ function addTask() {
 
         // Send task data to the backend using axios
         
-        axios.post('http://localhost:3002/api/tasks/addTask', taskData)
+        axios.post(`${baseURL}/api/tasks/addTask`, taskData)
             .then(response => {
                 // Handle successful response from the backend
                 console.log('Task added successfully:', response.data);
@@ -155,7 +110,7 @@ function handleTaskActions(event) {
         const taskId = target.parentElement.getAttribute('data-task-id');
 
     // Send a DELETE request to the backend API to delete the task
-    axios.delete(`http://localhost:3002/api/tasks/deleteTask/${taskId}`)
+    axios.delete(`${baseURL}/api/tasks/deleteTask/${taskId}`)
         .then(response => {
             // Handle successful response from the backend
             console.log('Task deleted successfully:', response.data);
@@ -200,7 +155,7 @@ function handleTaskActions(event) {
                 const taskId = target.parentElement.getAttribute('data-task-id');
                 const updatedData = { actualTime, completed: true };
                 // Send updated task data to the backend
-                axios.patch(`http://localhost:3002/api/tasks/updateTask/${taskId}`, updatedData)
+                axios.patch(`${baseURL}/api/tasks/updateTask/${taskId}`, updatedData)
                     .then(response => {
                         // Handle successful response from the backend
                         console.log('Task updated successfully:', response.data);
@@ -246,6 +201,7 @@ function updateProgress() {
 
 
 
+
 // // Function to update the progress and display it
 // function updateProgress() {
 //     const progressPercentage = totalTasks === 0 ? 0 : Math.floor((completedTasks / totalTasks) * 100);
@@ -276,6 +232,53 @@ function updateProgress() {
 
 
 
+// // Function to add a new task
+// function addTask() {
+    
+//     const taskText = taskInput.value;  // Get the task description from the input field
+    
+//     const taskTime = parseFloat(prompt('Enter target time for this task(in minutes):'));   // Get the target time for the task from the user
+
+//     // Check if the input is valid
+//     if (taskText.trim() !== '' && !isNaN(taskTime) && taskTime > 0) {
+//         // Create a new list item for the task
+//         const taskItem = document.createElement('li');
+        
+//         // Create a checkbox and a label for the task description
+//         const checkbox = document.createElement('input');
+//         checkbox.type = 'checkbox';
+//         const label = document.createElement('label');
+//         label.textContent = taskText;
+
+//         // Add the checkbox and label to the task item
+//         taskItem.appendChild(checkbox);
+//         taskItem.appendChild(label);
+
+//         // Create a section for task details (target time) and a delete button
+//         const taskDetails = document.createElement('div');
+//         taskDetails.classList.add('taskDetails');
+//         // taskDetails.innerHTML = `<span>Target time:</span> ${taskTime} mins`;
+//         taskDetails.innerHTML = `Target Time: ${taskTime} mins`;
+//         const deleteButton = document.createElement('button');
+//         deleteButton.innerText = 'Delete';
+//         deleteButton.classList.add('deleteTask');
+
+//         // Add task details and delete button to the task item
+//         taskItem.appendChild(taskDetails);
+//         taskItem.appendChild(deleteButton);
+
+//         // Add the task item to the task list
+//         taskList.appendChild(taskItem);
+
+//         // Clear the input field and update the total tasks count
+//         taskInput.value = '';
+//         totalTasks++;
+//         updateProgress();
+//     } else {
+//         // Display an alert if the input is invalid
+//         alert('Please enter valid time');
+//     }
+// }
 
 
 
