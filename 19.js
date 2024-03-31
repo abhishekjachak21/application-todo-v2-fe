@@ -1,3 +1,4 @@
+const baseURL = 'https://happyb2-api.onrender.com'
 
 // Get the profile form element
 const profF = document.getElementById('profile-form');
@@ -40,7 +41,7 @@ async function addUser() {
 
     try {
         // Send a POST request to the backend URL with user data
-        const response = await axios.post('http://localhost:3002/api/users/userInfo', userData);
+        const response = await axios.post(`${baseURL}/api/users/userInfo`, userData);
 
         // Handle successful response (if necessary)
         console.log('User data added successfully:', response.data);
@@ -119,7 +120,7 @@ function previewImage(event) {
 
 //     try {
 //         // Send a POST request to the backend URL with user data
-//         const response = await axios.post('http://localhost:3002/api/users/userInfo', userData);
+//         const response = await axios.post('${baseURL}/api/users/userInfo', userData);
 
 //         // Handle successful response (if necessary)
 //         console.log('User data added successfully:', response.data);
