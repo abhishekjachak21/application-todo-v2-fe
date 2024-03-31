@@ -1,4 +1,4 @@
-const baseURL = 'https://happyb2-api.onrender.com'
+// const baseURL = 'https://happyb2-api.onrender.com'
 
 // Get the profile form element
 const profF = document.getElementById('profile-form');
