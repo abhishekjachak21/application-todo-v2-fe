@@ -1,4 +1,5 @@
-const baseURL = 'https://happyb2-api.onrender.com'
+// const baseURL = 'https://happyb2-api.onrender.com'
+const baseURL = 'http://localhost:3002'
 
 // Getting references to HTML elements
 const taskInput = document.getElementById('taskInput');
@@ -78,7 +79,7 @@ function createTaskElement(taskData) {
     // Create a section for task details (target time) and a delete button
     const taskDetails = document.createElement('div');
     taskDetails.classList.add('taskDetails');
-    taskDetails.innerHTML = `Target Time: ${targetTime} mins`;
+    taskDetails.innerHTML = `Target Time: ${targetTime} mins<br>`;
     if (completed && actualTime) {
         // Display actual time spent if the task is completed
         taskDetails.innerHTML += `<br>Actual Time: ${actualTime} mins`;
@@ -96,7 +97,7 @@ function createTaskElement(taskData) {
 
 
 // taskList(parent)
-// -> taskItem(child of taskList and parent of below 4)
+// -> taskItem(child of taskList and parent of blow 4)
 //     ->checkbox(child of taskItem)
 //     ->label(child)
 //     ->taskDetails(child)
@@ -117,7 +118,7 @@ function handleTaskActions(event) {
 
             // Remove the task from the frontend UI
             target.parentElement.remove();
-            totalTasks--;
+            // totalTasks--;  //it was increasing even after delete event
             updateProgress();
         })
         .catch(error => {
@@ -166,19 +167,17 @@ function handleTaskActions(event) {
                     });
                
                
-                timeSpent.innerHTML = `Time Spent: ${actualTime} mins`;
+                timeSpent.innerHTML = `& Time Spent: ${actualTime} mins`;
                 target.parentElement.querySelector('.taskDetails').appendChild(timeSpent);
             } 
             else {
+
+                target.checked = false; //added later on 1 april 2am
                 alert('Please enter valid time'); //if input is not valid
+                // updateProgress();
             }
-         } else {
-            // Remove the actual time spent element if the task is incomplete
-            const timeSpentElement = target.parentElement.querySelector('.taskDetails div');
-            if (timeSpentElement) {   //if timeSpentElement=something
-                timeSpentElement.remove();   //remove it
-            }
-        }
+         } 
+        // l
     }
 }
 
@@ -197,6 +196,31 @@ function updateProgress() {
         trophyImage.style.opacity = opacity.toString();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

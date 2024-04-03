@@ -2,17 +2,26 @@
 
 // Get the profile form element
 const profF = document.getElementById('profile-form');
+const modifiedFormat = document.getElementById('modifiedForm');
 
 // Add submit event listener to the profile form
 profF.addEventListener('submit', function(event) {
     // Prevent the default form submission
     event.preventDefault();
+ 
+     // Hide the profile form by adding a CSS class
+     profF.classList.add('hidden');
+
+     // Show the modified form container by removing a CSS class
+     modifiedFormat.classList.remove('hidden');
     
-// Display the task progress section
-document.getElementById('task-progress-section').style.display = 'block';
+    // Display the task progress section
+    document.getElementById('task-progress-section').style.display = 'block';
+
     // Call the addUser function to handle adding user information
     addUser();
 });
+
 
 
 // Function to add user information
@@ -23,6 +32,19 @@ async function addUser() {
     const studyingProfession = document.getElementById('studyingProfession').value;
     const oneBigAchievement = document.getElementById('oneBigAchievement').value;
     const nextGoal = document.getElementById('nextGoal').value;
+
+
+    const modifiedContent = `
+    <p>Name: ${username}</p>
+    <p>Age: ${userage}</p>
+    <p>Studying Profession: ${studyingProfession}</p>
+    <p>One Past Achievement: ${oneBigAchievement}</p>
+    <p>Next Goal: ${nextGoal}</p>
+`;
+
+// Append the modified content to the modified format container
+modifiedFormat.innerHTML = modifiedContent;
+
 
 //  Get the uploaded image dataURL
     const profilePictureInput = document.getElementById('profile-picture');
