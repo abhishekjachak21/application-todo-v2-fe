@@ -1,0 +1,98 @@
+/* General styles */
+body {
+    background-color: rgb(247, 241, 57);
+    background-image: url('https://backgroundabstract.com/wp-content/uploads/edd/2021/10/abstract-waveforms-digital-art-wallpaper-preview-e1656154495627.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* User Profile section */
+.user-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-container h1 {
+    color: #3205fd;
+    font-weight: bolder;
+}
+
+.profile-picture-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#profile-form {
+    /* Styles for profile form */
+}
+
+#modifiedForm {
+    /* Styles for modified form */
+}
+
+/* Task Progress section */
+.task-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#task-progress-section {
+    /* Styles for task progress section */
+}
+
+#taskInput {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+/* Progress section */
+.progress-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Media queries for responsiveness */
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .user-container, .task-container, .progress-container {
+        padding: 10px;
+    }
+
+    .profile-picture-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    #taskInput {
+        width: calc(100% - 20px);
+    }
+}

@@ -1,5 +1,5 @@
-// const baseURL = 'https://happyb2-api.onrender.com'
-const baseURL = 'http://localhost:3002'
+const baseURL = 'https://happyb2-api.onrender.com'
+// const baseURL = 'http://localhost:3002'
 
 // Getting references to HTML elements
 const taskInput = document.getElementById('taskInput');
